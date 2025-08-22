@@ -730,17 +730,34 @@ class iwebApp {
             thisInstance.video();
             thisInstance.responsive();
         }, 500);
+        
+        // set flex gap
+        const uls = document.querySelectorAll('ul.iweb-flex');
+        uls.forEach(ul => {
+            const gap = ul.dataset.gap;
+            if (thisInstance.isNumber(gap)) {
+                if (!ul.classList.contains('inited')) {
+                    ul.style.gap = Math.max(0, parseInt(gap, 0)) + 'px';
+                    ul.removeAttribute('data-gap');
+                    ul.classList.add('inited');
+                }
+            }
+        });
 
         // insert div before & after into editor div
         const editors = document.querySelectorAll('div.iweb-editor');
         editors.forEach(editor => {
-            const clearBefore = document.createElement('div');
-            clearBefore.className = 'clearboth';
-            editor.insertAdjacentElement('afterbegin', clearBefore);
+            if (!editor.classList.contains('inited')) {
+                const clearBefore = document.createElement('div');
+                clearBefore.className = 'clearboth';
+                editor.insertAdjacentElement('afterbegin', clearBefore);
 
-            const clearAfter = document.createElement('div');
-            clearAfter.className = 'clearboth';
-            editor.insertAdjacentElement('beforeend', clearAfter);
+                const clearAfter = document.createElement('div');
+                clearAfter.className = 'clearboth';
+                editor.insertAdjacentElement('beforeend', clearAfter);
+
+                editor.classList.add('inited');
+            }
         });
         
         // Init form
@@ -3422,14 +3439,9 @@ class iwebApp {
         const yearText = (startYear === currentYear) ? `${currentYear}` : `${startYear}–${currentYear}`;
         const author = 'KaiyunChan';
         const text = [
-            'iWeb Native JavaScript Class',
+            'iweb native javaScript class, helps you easily build web applications, with the most commonly used features already included.',
             'Copyright (c) ' + yearText+ ' ' + author,
-            'Contact email: ' + ['kaiyun-chan', 'hotmail.com'].join('@'),
-            'Terms of Use:',
-            '1. Free for personal and educational use (read and redistribute verbatim copies).',
-            '2. NO modification, removal of attribution, or distribution of altered versions without prior written consent from the author.',
-            '3. For commercial use or substantial changes, please contact the author for permission.',
-            'All rights reserved.'
+            'https://github.com/728rabbit/iweb-native-javascript-class'
         ];
         console.log(`%c${text.join('\n')}`, 'color: #525896; font-weight: bold;');
     }

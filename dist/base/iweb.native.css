@@ -92,9 +92,12 @@
 .clearboth {
     position: relative !important;
     display: block !important;
+    float: none !important;
     clear: both !important;
     width: 100% !important;
     height: 0px !important;
+    padding: 0px !important;
+    margin: 0px !important;
     overflow: hidden !important;
 }
 
@@ -357,7 +360,7 @@ a.btn {
     padding: 6px 12px;
     border: 0px;
     border-radius: 4px;
-    line-height: 24px;
+    line-height: 1.5;
     vertical-align: top;
     cursor: pointer;
     
@@ -510,7 +513,7 @@ div.iweb-tips-message > div > a.close {
 }
 
 div.iweb-tips-message > div > span {
-    line-height: 24px;
+    line-height: 1.5;
 }
 
 div.iweb-editor {
@@ -589,7 +592,7 @@ div.iweb-input-file div.preview > div {
 
 div.iweb-input-file div.preview > div > span {
     display: block;
-    line-height: 24px;
+    line-height: 1.5;
     vertical-align: middle;
 }
 
@@ -916,7 +919,7 @@ div.iweb-checkbox:before {
     content: '';
     width: 20px;
     height: 20px;
-    top: 2px;
+    top: 7px;
     left: 0px;
     border: 2px solid var(--icolor-gray);
     border-radius: 4px;
@@ -937,7 +940,7 @@ div.iweb-checkbox.checked:after {
     font-weight: bold;
     width: 20px;
     height: 20px;
-    top: 2px;
+    top: 7px;
     left: 0px;
     text-align: center;
     line-height: 22px !important;
@@ -963,7 +966,7 @@ div.iweb-checkbox > label {
     margin: 0px!important;
     vertical-align: middle;
     word-break: break-all;
-    line-height: 1.25;
+    line-height: 1.5;
     cursor: pointer;
 }
 
@@ -990,7 +993,7 @@ div.iweb-radio:before {
     content: '';
     width: 20px;
     height: 20px;
-    top: 2px;
+    top: 7px;
     left: 0px;
     border: 2px solid var(--icolor-gray);
     border-radius: 10px;
@@ -1008,7 +1011,7 @@ div.iweb-radio.checked:after {
     content: "";
     width: 12px;
     height: 12px;
-    top: 6px;
+    top: 11px;
     left: 4px;
     border-radius: 6px;
 }
@@ -1033,7 +1036,7 @@ div.iweb-radio > label {
     margin: 0px!important;
     vertical-align: middle;
     word-break: break-all;
-    line-height: 1.25;
+    line-height: 1.5;
     cursor: pointer;
 }
 
@@ -1297,9 +1300,8 @@ div.iweb-info-dialog > div > div.content {
     position: relative;
     display: inline-block;
     width: auto;
-    min-width: 120px;
     max-width: 100%;
-    margin-top: 80px;
+    margin-top: 90px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 80px;
@@ -1366,6 +1368,8 @@ div.iweb-info-dialog > div > div.content > a.btn-close:after {
 div.iweb-info-dialog > div > div.content > div {
     position: relative;
     background-color: var(--icolor-white);
+    width: 360px;
+    max-width: 100%;
     border-radius: 4px;
     padding: 20px;
     border: 1px solid var(--icolor-gray);
@@ -1860,6 +1864,7 @@ div.iweb-row label.name {
     position: relative;
     display: block;
     font-weight: bold;
+    line-height: 1.5;
     margin-top: 2px;
     margin-bottom: 6px;
 }
@@ -1871,12 +1876,46 @@ div.iweb-row div.ivalue {
     font-size: 1rem;
     max-width: 100%;
     min-height: 36px;
-    line-height: 24px;
+    line-height: 1.5;
     padding: 6px 0px;
     border-radius: 0px;
     border-top: 2px solid var(--icolor-white);
     border-bottom: 2px solid var(--icolor-gray);
     resize: none;
+}
+
+ul.iweb-flex {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 0px;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+ul.iweb-flex > li {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+}
+
+ul.iweb-flex.vcenter {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -ms-grid-row-align: center;
+    align-items: center;
+}
+
+ul.iweb-flex.hcenter {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+#tinymce ul.iweb-flex > li {
+    border: 2px dotted var(--icolor-gray);
 }
 
 div.iweb-grid {
@@ -2234,7 +2273,7 @@ div.widget.expand.show > div.hidden {
     display: block;
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1200px) {
     div.iweb-viewer div.iweb-grid div.column-5 {
         -webkit-box-flex: 0;
         -ms-flex: 0 1 calc(33.33% - 13.33px);
@@ -2260,7 +2299,7 @@ div.widget.expand.show > div.hidden {
     }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 900px) {
     div.iweb-viewer div.iweb-grid div.column-3,
     div.iweb-viewer div.iweb-grid div.column-4,
     div.iweb-viewer div.iweb-grid div.column-5 {
