@@ -5,9 +5,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="csrf-token" content="96ca6fd5cc5283000910785ba2344044"/>
-        <link href="dist/base/icons/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-        <link href="dist/base/iweb.native.css" rel="stylesheet" type="text/css"/>
-        <script src="dist/base/iweb.native.js"></script>
+        <link href="base/icons/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="base/iweb.native.css" rel="stylesheet" type="text/css"/>
+        <script src="base/iweb.native.js"></script>
+        <script src="base/jquery.min.js"></script>
         <style>
             div.row {
                 margin-top: 10px;
@@ -109,7 +110,7 @@
 
                     <div class="iweb-row">
                         <label>姓名</label>
-                        <input type="text" name="name" data-validation="required" value="陳启文">
+                        <input type="text" name="name" data-validation="required" value="陳大文">
                     </div>
 
                     <div class="iweb-row">
@@ -207,7 +208,7 @@
                         <textarea name="content" data-validation="required">ABc</textarea>
                     </div>
 
-
+                    <div class="clearboth"></div>
 
                     <div class="iweb-row">
                         <label>接收推廣方式</label>
@@ -283,16 +284,50 @@
             
             <p>&nbsp;</p>
             <p>&nbsp;</p>
-
+            
+            <video preload="auto" class="iweb-video" data-source="../SampleVideo_1280x720_2mb.mp4">
+                <!-- 初始影片連結將被 Blob 動態替換 -->
+                <source id="videoSource" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+            
+            
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            
             <video preload="auto" class="iweb-video">
                 <!-- 初始影片連結將被 Blob 動態替換 -->
                 <source id="videoSource" src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
                 Your browser does not support HTML5 video.
             </video>
-
+            
+            
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            
+            
+            <div class="iweb-editor">
+                <iframe width="1268" height="713" src="https://www.youtube.com/embed/lHhRhPV--G0" title="Flutter in 100 seconds" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            
 
             <p>&nbsp;</p>
             <p>&nbsp;</p>
+            
+            <div id="tinymce">
+                <div>
+                    <ul class="iweb-flex" data-gap="20">
+                        <li>關於我們</li>
+                        <li>課程主題</li>
+                        <li>參與學校名單</li>
+                        <li>聯絡我們</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            
             <div id="tinymce">
                 <div class="iweb-row">
                     <label>1/2</label>
