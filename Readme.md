@@ -8,4 +8,5 @@ Terms of Use:
 1. Free for personal and educational use (read and redistribute verbatim copies).
 2. NO modification, removal of attribution, or distribution of altered versions without prior written consent from the author.
 3. For commercial use or substantial changes, please contact the author for permission.
+
 All rights reserved.
