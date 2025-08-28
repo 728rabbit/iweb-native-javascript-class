@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>向上計數器 Up counter</title>
+        <link href="base/icons/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="base/iweb.native.css" rel="stylesheet" type="text/css"/>
+        <script src="base/iweb.native.js"></script>
+        <script src="3rd/floatingSocialShare.js"></script>
+        <style>
+            .figures {
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+            }
+
+            .figure {
+                margin: 20px;
+            }
+
+            .counter {
+                font-size: 48px;
+                font-weight: bold;
+                color: #003366;
+            }
+
+            .label {
+                display: block;
+                font-size: 14px;
+                color: #555;
+                margin-top: 10px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="padding:40px;">
+            <div class="widget">
+                <div id="upcounter-area">
+                    <div class="figures">
+                        <div class="figure">
+                            <div class="counter" data-target="102">0</div>
+                            <div class="label">Startup</div>
+                        </div>
+                        <div class="figure">
+                            <div class="counter" data-target="38">0</div>
+                            <div class="label">Companies</div>
+                        </div>
+                        <div class="figure">
+                            <div class="counter" data-target="1253">0</div>
+                            <div class="label">Technology</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>const iweb = (new iwebApp()).init();(new floatingSocialShare());</script>
+        <script>
+            function formatNumber(num) {
+                return num.toLocaleString();
+            }
+
+            function animateCounter(counter) {
+                const target = +counter.dataset.target;
+                let current = 0;
+                const increment = Math.ceil(target / 100);
+                const update = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = formatNumber(current) + "+";
+                        requestAnimationFrame(update);
+                    } else {
+                        counter.textContent = formatNumber(target) + "+";
+                    }
+                };
+                update();
+            }
+            
+            document.addEventListener('DOMContentLoaded', () => {
+                const section = document.querySelector('#upcounter-area');
+                const counters = section.querySelectorAll('div.counter');
+                let hasAnimated = false;
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !hasAnimated) {
+                            counters.forEach(counter => animateCounter(counter));
+                            hasAnimated = true;
+                            observer.unobserve(section);
+                        }
+                    });
+                }, {
+                    threshold: 0.5
+                });
+                observer.observe(section);
+            });
+        </script>
+    </body>
+</html>

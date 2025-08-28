@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-hant">
+    <head>
+        <title>iweb native lib</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="96ca6fd5cc5283000910785ba2344044"/>
+        <link href="base/icons/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="base/iweb.native.css" rel="stylesheet" type="text/css"/>
+        <script src="base/iweb.native.js"></script>
+        <script src="3rd/floatingSocialShare.js"></script>
+        <style>
+            div.section {
+                margin-top: 30px;
+            }
+            
+            div.section:first-child {
+                margin-top: 0px;
+            }
+            
+            h1 {
+                display: block;
+                font-size: 1.25rem;
+                padding-bottom: 10px;
+            }
+            
+            div.color-list {
+                position: relative;
+            }
+            
+            div.color-list > div {
+                display: inline-block;
+                border: 2px solid #ccc;
+                width: 40px;
+                height: 40px;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="padding:40px;">
+            <div class="widget">
+                <div class="section">
+                    <h1>1. 主題色 Theme Color</h1>
+                    <div class="color-list">
+                        <div style="background-color:var(--background-color);"></div>
+                        <div style="background-color:var(--icolor-primary);"></div>
+                        <div style="background-color:var(--icolor-darkgreen);"></div>
+                        <div style="background-color:var(--icolor-green);"></div>
+                        <div style="background-color:var(--icolor-darkred);"></div>
+                        <div style="background-color:var(--icolor-red);"></div>
+                        <div style="background-color:var(--icolor-darkyellow);"></div>
+                        <div style="background-color:var(--icolor-yellow);"></div>
+                        <div style="background-color:var(--icolor-darkblue);"></div>
+                        <div style="background-color:var(--icolor-blue);"></div>
+                        <div style="background-color:var(--icolor-darkgray);"></div>
+                        <div style="background-color:var(--icolor-gray);"></div>
+
+                        <div style="background-color:var(--icolor-white);"></div>
+                        <div style="background-color:var(--icolor-black);"></div>
+
+                        <div style="background-color:var(--icolor-lightgreen);"></div>
+                        <div style="background-color:var(--icolor-lightred);"></div>
+                        <div style="background-color:var(--icolor-lightblue);"></div>
+                        <div style="background-color:var(--icolor-lightyellow);"></div>
+                        <div style="background-color:var(--icolor-lightpink);"></div>
+                        <div style="background-color:var(--icolor-lightgray);"></div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h1>2. 提示信息 Prompt information</h1>
+                    <div class="iweb-tips-message success"><div><a class="close">×</a><span>項目資料成功更新。</span></div></div>
+                    <div class="iweb-tips-message error"><div><a class="close">×</a><span>項目資料更新失敗。</span></div></div>
+                </div>
+
+                <div class="section">
+                    <h1>3. 字體大小 Font size</h1>
+                    <div>
+                        <div class="font">
+                           <a class="font-switch small" href="#" data-size="small">A-</a><!--
+                           --><a class="font-switch middle current" href="#" data-size="middle">A</a><!--
+                           --><a class="font-switch large" href="#" data-size="large">A+</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h1>4. 表格 Form</h1>
+                    <form data-ajax="1" data-alert="1">
+                        <div class="widget">
+                            <div class="iweb-row">
+                                <label>專業/专业 Professional</label>
+                                <select name="professionals[]" data-validation="required" data-virtual="1" data-filter="1" multiple>
+                                     <optgroup label="技術類 Technology">
+                                        <option value="software_developer" selected>軟體開發人員 Software Developers</option>
+                                        <option value="engineer">工程師 engineer</option>
+                                        <option value="data_scientist">數據科學家 Data Scientist</option>
+                                    </optgroup>
+                                    <optgroup label="設計類 Design">
+                                        <option value="graphic_designer" selected>平面設計師 Graphic Designer</option>
+                                        <option value="ux_designer">用戶體驗設計師 UX Designer</option>
+                                        <option value="ui_designer">用戶介面設計師 UI Designer</option>
+                                    </optgroup>
+                                    <optgroup label="管理類 Management">
+                                        <option value="manager">經理 Manager</option>
+                                        <option value="project_manager">專案經理 Project Manager</option>
+                                        <option value="consultant">顧問 Consultant</option>
+                                    </optgroup>
+                                    <option value="law">律師 Law</option>
+                                </select>
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>姓名 Name</label>
+                                <input type="text" name="name" data-validation="required" value="陳大文 Chen Tai Man">
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>性別 Gender</label>
+                                <div class="iweb-radio-set">
+                                    <input type="radio" id="male" name="gender" value="male" data-validation="required" checked>
+                                    <label for="male">男 M</label>
+
+                                    <input type="radio" id="female" name="gender" value="female" data-validation="required">
+                                    <label for="female">女 F</label>
+                                </div>
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>電話 Telephone</label>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td width="110">
+                                            <select name="telephone_code" data-validation="required" data-virtual="1">
+                                                <option value="852" selected>+852</option>
+                                                <option value="853">+853</option>
+                                                <option value="86">+86</option>
+                                            </select>
+                                        </td>
+                                        <td width="10">&nbsp;</td>
+                                        <td>
+                                            <input type="tel" name="telephone" value="12345678" data-validation="required|number">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>電郵 Email</label>
+                                <input type="text" name="email" value="demo@123.com" data-validation="required|email">
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>密碼 Password</label>
+                                <input type="password" name="password" value="Abc123" data-validation="required|password">
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>開始日期 Start Date</label>
+                                <input type="date" name="start_date" value="2024-10-10" data-validation="required|date">
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>結束日期 End Date</label>
+                                <input type="date" name="end_date" value="2024-10-10" data-min="2025-03-02" data-validation="required|date" >
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>開始時間 Start Time</label>
+                                <input type="time" name="start_time"  value="08:00" data-start="800" data-end="2200" data-interval="10" data-validation="required|time">
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>結束時間 End Time</label>
+                                <input type="time" name="end_time" value="08:00" data-validation="required|time">
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>貨幣 Currency</label>
+                                <input type="text" name="currency" value="100" data-validation="required|ge0">
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>顔色選擇器 Color Picker</label>
+                                <input type="color" name="mycolor" value="#000000" data-validation="required">
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>推薦人 Recommender</label>
+                                <input type="text" class="fill-id" name="member_id" value="1" 
+                                    data-validation="required"
+                                    data-cannew="1"
+                                    data-autocomplete="1"
+                                    data-default="陳大文"
+                                    data-url="http://localhost:8000/myprojects/mylib/fetch.php"
+                                    data-param2="type:123"
+                                    data-sfunc="select_autoc"
+                                    data-rfunc="remove_autoc">
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>單一附件 Single Attachment</label>
+                                <input type="file" name="myfile">
+                                <div>&nbsp;</div>
+                                <label>多個附件 Multiple Attachments</label>
+                                <input type="file" name="mymultifile[]" multiple>
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>備注 Remark</label>
+                                <textarea name="content" data-validation="required">測試 Testing</textarea>
+                            </div>
+
+                            <div class="clearboth"></div>
+
+                            <div class="iweb-row">
+                                <label>接收推廣方式 Receiving method</label>
+                                <div class="iweb-checkbox-set">
+                                    <input type="checkbox" id="receiving_method_1" name="receiving_method[1000]" value="email" data-validation="required" checked>
+                                    <label for="receiving_method_1">電郵 Email</label>
+
+                                    <input type="checkbox" id="receiving_method_2" name="receiving_method[]" value="mobile" data-validation="required" >
+                                    <label for="receiving_method_2">短信 MSM</label>
+
+                                    <input type="checkbox" id="receiving_method_3" name="receiving_method[3000]" value="whatsapp" data-validation="required" checked>
+                                    <label for="receiving_method_3">Whatsapp</label>
+                                </div>
+                            </div>
+                            <div class="iweb-row last">
+                                <button type="reset" class="btn">重設 Reset</button>
+                                <button type="submit" class="btn">提交 Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="section">
+                    <h1>5. 對話框 Dialog</h1>
+                    <div>
+                        <button type="button" class="btn" id="btn-alert-dialog">警報 Alert Dialog</button>
+                        <button type="button" class="btn" id="btn-confirm-dialog">確認對話框 Confirm Dialog</button>
+                        <button type="button" class="btn" id="btn-content-dialog">內容對話框 Content Dialog</button>
+                        <button type="button" class="btn" id="btn-modal-dialog">模態對話框 Modal Dialog</button>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h1>6. 請求 Post & Get</h1>
+                    <div>
+                        <button type="button" class="btn" id="btn-post">Post</button>
+                        <button type="button" class="btn" id="btn-get">Get</button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h1>7. 文件上傳器 File Uploader</h1>
+                    <div><input type="file" id="myfiles" class="dropfiles"></div>
+                    <div style="line-height:2;color:red;">OR</div>
+                    <div><button type="button" id="btn-select-files">選擇文檔</button></div>
+                </div>
+
+                <div class="section">
+                    <h1>8. 分頁 Pagination</h1>
+                    <div><div class="mypage" data-totalpage="10"></div></div>
+                </div>
+
+                <div class="section">
+                    <h1>9. 視頻 Video</h1>
+                    <div>
+                        <video preload="auto" class="iweb-video" data-source="sample.mp4">
+                            <source id="videoSource" type="video/mp4">
+                            Your browser does not support HTML5 video.
+                        </video>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h1>10. 網格排版 Grid layout</h1>
+                    <div id="tinymce">
+                        <div>
+                            <ul class="iweb-flex" data-gap="20">
+                                <li>關於我們</li>
+                                <li>課程主題</li>
+                                <li>聯絡我們</li>
+                            </ul>
+                        </div>
+
+                        <div style="line-height:2;color:red;">OR</div>
+
+                        <div>
+                            <div class="iweb-row">
+                                <label>1/2</label>
+                                <div class="iweb-grid">
+                                    <div class="column-2">Col - 1</div>
+                                    <div class="column-2">Col - 2</div>
+                                </div>
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>1/3</label>
+                                <div class="iweb-grid">
+                                    <div class="column-3">Col - 1</div>
+                                    <div class="column-3">Col - 2</div>
+                                    <div class="column-3">Col - 3</div>
+                                </div>
+                            </div>   
+
+
+                            <div class="iweb-row">
+                                <label>1/4</label>
+                                <div class="iweb-grid">
+                                    <div class="column-4">Col - 1</div>
+                                    <div class="column-4">Col - 2</div>
+                                    <div class="column-4">Col - 3</div>
+                                    <div class="column-4">Col - 4</div>
+                                </div>
+                            </div>
+
+                            <div class="iweb-row">
+                                <label>1/5</label>
+                                <div class="iweb-grid">
+                                    <div class="column-5">Col - 1</div>
+                                    <div class="column-5">Col - 2</div>
+                                    <div class="column-5">Col - 3</div>
+                                    <div class="column-5">Col - 4</div>
+                                    <div class="column-5">Col - 5</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h1>11. 下拉式區間 Drop-down range</h1>
+                    <div class="widget expand">
+                        <a class="control-stretch" href="#">
+                            <span>圖片集 Image Gallery | 1080*1080</span>
+                            <i class="fa fa-plus"></i>
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <div class="hidden">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>const iweb = (new iwebApp()).init();(new floatingSocialShare());</script>
+            <script>
+            function iwebFunc() { 
+                // dialog
+                document.getElementById('btn-alert-dialog').addEventListener('click', function() {
+                    iweb.alert('您好！ Hello!'); 
+                });
+
+                document.getElementById('btn-confirm-dialog').addEventListener('click', function() { 
+                    iweb.confirm('您確定要刪除嗎？<br/>Are you sure you want to delete?', function(result) { 
+                        console.log(result);
+                    }); 
+                });
+
+                document.getElementById('btn-content-dialog').addEventListener('click', function() { 
+                    iweb.dialog('您好！ Hello!', function() { 
+                        console.log('init info dialog');
+                    }, function() {
+                        console.log('close info dialog');
+                    }); 
+                });
+
+                document.getElementById('btn-modal-dialog').addEventListener('click', function() {
+                    iweb.modalDialog('<h1>您好！ Hello!</h1>', null, {'title': '系統提示', 'ClassName': '', 'width': 800, 'height': 600 });
+                });
+                
+                // request
+                document.getElementById('btn-post').addEventListener('click', function() {
+                    iweb.doPost({
+                        url: 'http://localhost/fetch.php',
+                        payload: {
+                            name_1: 1,
+                            name_2: 2
+                        },
+                        dataType: 'text'
+                    }, function(responseData) {
+                        console.log(responseData);
+                        alert('post done');
+                    });
+                });
+
+
+                document.getElementById('btn-get').addEventListener('click', function() {
+                    iweb.doFetch({
+                        url: 'http://localhost/fetch.php',
+                        payload: {
+                            name_1: 1,
+                            name_2: 2
+                        },
+                        dataType: 'text'
+                    }, function(responseData) {
+                        console.log(responseData);
+                        alert('get done');
+                    });
+                });
+
+                // pagination
+                iweb.pagination('div.mypage');
+
+                // uploader
+                iweb.uploaderArea('myfiles', {
+                    url: 'http://localhost//upload.php',
+                    payload: {
+                        name: 'Chan Tai Man'
+                    },
+                    dataType: 'text',
+                    allowedTypes: 'jpg|png'
+                }, function() {
+                    alert('end upload 1');
+                });
+
+                // Handle file selection button
+                document.getElementById('btn-select-files').addEventListener('click', function() { 
+                    iweb.uploader({
+                        url: 'http://localhost:8000/myprojects/mylib/upload.php',
+                        payload: {
+                            name: 'abc'
+                        },
+                        dataType: 'text'
+                    });
+                });
+            }
+            </script>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,328 @@
+<link href="base/icons/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="base/iweb.native.min.css" rel="stylesheet" type="text/css">
+<script src="base/iweb.native.min.js" type="text/javascript"></script>
+<script>const iweb = (new iwebApp()).init();</script>
+
+--------------------------------------------------------------------------------
+
+1. Input - iweb.inputBox();
+
+<input type="text" name="name" data-validation="required" value="">
+
+<input type="text" name="telephone" data-validation="required|number" value="12345678">
+
+<input type="text" name="email" data-validation="required|email" value="demo@123.com">
+
+<input type="password" name="password" data-validation="required|password" value="Abc123">
+
+<input type="date" name="start_date" data-validation="required|date" value="2024-10-10" data-min="2024-01-01" data-max="2024-12-31">
+
+<input type="time" name="start_time" data-validation="required|time" value="10:00" data-start="800" data-end="2200" data-interval="10">
+
+<input type="color" name="mycolor" data-validation="required" value="#000000">
+
+// greater than or equal to 0
+<input type="text" name="amount" data-validation="required|ge0" value="100">
+
+// greater than 0
+<input type="text" name="amount" data-validation="required|gt0" value="100">
+--------------------------------------------------------------------------------
+
+2. Autocomplete - iweb.inputBox();
+
+<input type="text" class="fill-id" name="member_id" value="1" 
+    data-cannew="1"
+    data-autocomplete="1"
+    data-default="chan tai man"
+    data-placeholder=""
+    data-url="your_url_here"
+    data-param1="type:1"
+    data-sfunc="select_autoc"
+    data-rfunc="remove_autoc">
+
+
+json_encode([
+    1    =>  [
+        'id' => '1',
+        'name' => '陳大文 | 90440554',
+        'value' => '陳大文'
+    ], 
+    2    =>  [
+        'id' => '2',
+        'name' => '方麗麗'
+    ]
+]);
+
+--------------------------------------------------------------------------------
+
+3. Select - iweb.selectBox();
+
+<select name="professionals[]" data-validation="required" data-virtual="1" data-filter="1" multiple></select>
+
+--------------------------------------------------------------------------------
+
+4. Checkbox - iweb.checkBox();
+
+<div class="iweb-checkbox-set">
+    <div>
+        <input type="checkbox" id="promotional_method_1" name="promotional_method[]" value="email" data-validation="required" checked>
+        <label for="promotional_method_1">Email</label>
+    </div>
+    
+    <div>
+        <input type="checkbox" id="promotional_method_2" name="promotional_method[]" value="mobile" data-validation="required">
+        <label for="promotional_method_2">SMS</label>
+    </div>
+
+    <div>
+        <input type="checkbox" id="promotional_method_3" name="promotional_method[]" value="whatsapp" data-validation="required">
+        <label for="promotional_method_3">Whatsapp</label>
+    </div>
+</div>
+
+--------------------------------------------------------------------------------
+
+5. Raido - iweb.radioBox();
+
+<div class="iweb-radio-set">
+    <div>
+        <input type="radio" id="male" name="gender" value="male" data-validation="required">
+        <label for="male">M</label>
+    </div>
+
+    <div>
+        <input type="radio" id="female" name="gender" value="female" data-validation="required">
+        <label for="female">F</label>
+    </div>
+</div>
+
+--------------------------------------------------------------------------------
+
+6. Responsive Div - iweb.responsive();
+
+<div class="iweb-responsive" data-width="1280" data-height="712"></div>
+
+--------------------------------------------------------------------------------
+
+7. Post & get
+
+iweb.doPost({
+    dataType: 'json',
+    url: your_url_here,
+    payload: {
+        name_1: 1,
+        name_2: 2
+    }
+}, function(responseData) {
+    console.log(responseData);
+});
+
+iweb.doFetch({
+    dataType: 'json',
+    url: your_url_here,
+    payload: {
+        name_1: 1,
+        name_2: 2
+    }
+}, function(responseData) {
+    console.log(responseData);
+});
+
+--------------------------------------------------------------------------------
+
+8. Ajax Form - iweb.initForm();
+
+<form data-ajax="1"></form>
+
+<form data-ajax="1" data-cfunc="complate_callback_function"></form>
+
+
+<form data-ajax="1" data-vfunc="before_callback_function"></form>
+
+--------------------------------------------------------------------------------
+
+9. Ajax Upload
+
+iweb.bindEvent('click', '#btn-select-files', function(target, e) {
+    iweb.uploader({
+        url: your_url_here,
+        payload: {
+            name: 'abc'
+        },
+        allowedTypes: 'jpg|png|pdf',
+        maxFileSize: 8
+        autoClose: true
+    }, function() {
+        cosole.log('end');
+    });
+}
+
+Or
+
+<div><input type="file" id="myfiles"></div>
+
+iweb.uploaderArea('myfiles', {
+    url: your_url_here,
+    payload: {
+        name: 'abc'
+    },
+    allowedTypes: 'jpg|png',
+    maxFileSize: 8
+    autoClose: true
+}, function() {
+    cosole.log('end');
+});
+
+--------------------------------------------------------------------------------
+
+10. Pagination - iweb.pagination('div.mypage');
+
+<div class="mypage" data-totalpage="10"></div>
+
+--------------------------------------------------------------------------------
+
+11. Dialog
+
+alert(message, callBack, customizeClassName)
+
+confirm(message, callBack, customizeClassName)
+
+dialog(htmlContent, initFunc, callBack, customizeClassName)
+
+tipsMsg(message, isSuccess = false, callBack)
+
+modalDialog('<h1>"\'Hello World</h1>', initFunc, {'title': '系統提示', 'ClassName': '', 'width': 800, 'height': 600 });
+
+--------------------------------------------------------------------------------
+
+12. Event
+
+bindEvent(eventType, selector, callBack)
+
+unBindEvent(eventType, selector)
+
+triggerEvent(eventType, selector) {
+
+--------------------------------------------------------------------------------
+
+13. Validation
+
+isValue(value)
+
+isMatch(value1, value2, sensitive = false)
+
+isNumber(value, digital_mode = false)
+
+isEmail(value)
+
+isPassword(value)
+
+isDate(value, format = 'Y-m-d')
+
+isTime(value)
+
+--------------------------------------------------------------------------------
+
+14. Convert
+
+formatNumber(value, currency_mode, decimal)
+
+formatDateTime(value, format = 'Y-m-d H:i:s')
+
+formatBytes(bytes, decimals)
+
+formatTime(seconds)
+
+--------------------------------------------------------------------------------
+
+15. Cookie
+
+setCookie(cname, cvalue, exdays = 14)
+
+getCookie(cname)
+
+deleteCookie(cname)
+
+--------------------------------------------------------------------------------
+
+16. Others
+
+deBounce(callBack, delay = 100, prevent = true)
+
+showBusy(status, value)
+
+scrollTo(element, adjustment_value, callBack)
+
+getURL(extra)
+
+getURLParam(name)
+
+randomNum(min, max)
+
+randomString(length)
+
+--------------------------------------------------------------------------------
+
+16. Callback - DOMContentLoaded
+
+function iwebCommonLayout(function(win_width) { });
+
+function iwebLayout(function(win_width) { });
+
+function iwebChildLayout(function(win_width) { });
+
+function iwebExtraLayout(function(win_width) { });
+
+
+function iwebCommonFunc(function() { });
+
+function iwebFunc(function() { });
+
+function iwebChildFunc(function() { });
+
+function iwebExtraFunc(function() { });
+
+--------------------------------------------------------------------------------
+
+17. Callback - windowLoaded
+
+function iwebCommonLayoutEnd(function(win_width) { });
+
+function iwebLayoutEnd(function(win_width) { });
+
+function iwebChildEnd(function(win_width) { });
+
+function iwebExtraLayoutEnd(function(win_width) { });
+
+
+function iwebCommonFuncEnd(function() { });
+
+function iwebFuncEnd(function() { });
+
+function iwebChildFuncEnd(function() { });
+
+function iwebExtraFuncEnd(function() { });
+
+--------------------------------------------------------------------------------
+
+18. Callback - windowResize
+
+function iwebCommonLayout(function(win_width) { });
+
+function iwebLayout(function(win_width) { });
+
+function iwebChildLayout(function(win_width) { });
+
+function iwebExtraLayout(function(win_width) { });
+
+--------------------------------------------------------------------------------
+
+19. Callback - windowScroll
+
+function iwebCommonScroll(function(scroll_top) { });
+
+function iwebScroll(function(scroll_top) { });
+
+function iwebChildScroll(function(scroll_top) { });
+
+function iwebExtraScroll(function(scroll_top) { });
