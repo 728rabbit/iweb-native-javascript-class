@@ -3,6 +3,8 @@ Helps you easily build web applications, with the most commonly used features al
 
 In addition, efforts are being made to develop other tools (e.g. Simple Resource Calendar etc)
 
+Demo Link: https://728rabbit.github.io/iweb-native-javascript-class/
+
 Contact email: kaiyun-chan@hotmail.com
 Terms of Use:
 1. Free for personal and educational use (read and redistribute verbatim copies).
@@ -10,4 +12,5 @@ Terms of Use:
 3. For commercial use or substantial changes, please contact the author for permission.
 
 All rights reserved.
+
 
