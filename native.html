@@ -34,6 +34,20 @@
                 width: 40px;
                 height: 40px;
             }
+            
+            #demotable {
+                width: 100%;
+            }
+            
+            #demotable th,
+            #demotable td {
+                position: relative;
+                padding: 8px 4px;
+                border: 2px solid var(--icolor-gray);
+                text-align: left;
+                word-break: break-all;
+                overflow: hidden;
+            }
         </style>
     </head>
     <body>
@@ -342,6 +356,37 @@
                         </div>
                     </div>
                 </div>
+                
+                <div class="section">
+                    <h1>12. 響應式表格 Responsive Table </h1>
+                    <div>
+                        <table id="demotable" class="iweb-rtable">
+                            <thead>
+                                <tr style="background:#ccc;">
+                                    <th style="background:lightpink;">Name</th>
+                                    <th style="background:lightblue;">Age</th>
+                                    <th style="background:lightgray;">Country</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Alice <span>(admin)</span></td>
+                                    <td>25</td>
+                                    <td>USA</td>
+                                    <td>alice@example.com</td>
+                                </tr>
+                                <tr>
+                                    <td>Bob</td>
+                                    <td>30</td>
+                                    <td>UK</td>
+                                    <td>bob@example.com</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
             </div>
             <script>const iweb = (new iwebApp()).init();(new floatingSocialShare());</script>
             <script>
@@ -425,6 +470,7 @@
                     });
                 });
             }
+            
             </script>
         </div>
     </body>
