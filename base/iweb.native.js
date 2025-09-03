@@ -733,6 +733,7 @@ class iwebApp {
         setTimeout(function() {
             thisInstance.iframe();
             thisInstance.video();
+            thisInstance.responsive();
         }, 500);
         
         // set flex gap
