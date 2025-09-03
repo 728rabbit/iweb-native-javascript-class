@@ -122,6 +122,7 @@ class iwebApp {
                 document.body.style.setProperty('--iscrollbar-width', (window.innerWidth - thisInstance.viewerWidth) + 'px');
                 
                 thisInstance.responsive();
+                thisInstance.responsiveTable();
                 
                 safeCallFunc('iwebCommonLayout', thisInstance.viewerWidth);
                 safeCallFunc('iwebLayout', thisInstance.viewerWidth);
@@ -162,6 +163,8 @@ class iwebApp {
                     thisInstance.viewerWidth = parseInt(document.querySelector('div.iweb-viewer').offsetWidth);
 
                     thisInstance.responsive();
+                    thisInstance.responsiveTable();
+                    
                     safeCallFunc('iwebCommonLayout', thisInstance.viewerWidth);
                     safeCallFunc('iwebLayout', thisInstance.viewerWidth);
                     safeCallFunc('iwebChildLayout', thisInstance.viewerWidth);
@@ -730,37 +733,60 @@ class iwebApp {
         setTimeout(function() {
             thisInstance.iframe();
             thisInstance.video();
-            thisInstance.responsive();
         }, 500);
         
         // set flex gap
         const uls = document.querySelectorAll('ul.iweb-flex');
-        uls.forEach(ul => {
-            const gap = ul.dataset.gap;
-            if (thisInstance.isNumber(gap)) {
-                if (!ul.classList.contains('inited')) {
-                    ul.style.gap = Math.max(0, parseInt(gap, 0)) + 'px';
-                    ul.removeAttribute('data-gap');
-                    ul.classList.add('inited');
+        if(uls.length > 0) {
+            uls.forEach(ul => {
+                const gap = ul.dataset.gap;
+                if (thisInstance.isNumber(gap)) {
+                    if (!ul.classList.contains('inited')) {
+                        ul.style.gap = Math.max(0, parseInt(gap, 0)) + 'px';
+                        ul.removeAttribute('data-gap');
+                        ul.classList.add('inited');
+                    }
                 }
-            }
-        });
+            });
+        }
 
         // insert div before & after into editor div
         const editors = document.querySelectorAll('div.iweb-editor');
-        editors.forEach(editor => {
-            if (!editor.classList.contains('inited')) {
-                const clearBefore = document.createElement('div');
-                clearBefore.className = 'clearboth';
-                editor.insertAdjacentElement('afterbegin', clearBefore);
+        if(editors.length > 0) {
+            editors.forEach(editor => {
+                if (!editor.classList.contains('inited')) {
+                    const clearBefore = document.createElement('div');
+                    clearBefore.className = 'clearboth';
+                    editor.insertAdjacentElement('afterbegin', clearBefore);
 
-                const clearAfter = document.createElement('div');
-                clearAfter.className = 'clearboth';
-                editor.insertAdjacentElement('beforeend', clearAfter);
+                    const clearAfter = document.createElement('div');
+                    clearAfter.className = 'clearboth';
+                    editor.insertAdjacentElement('beforeend', clearAfter);
 
-                editor.classList.add('inited');
-            }
-        });
+                    editor.classList.add('inited');
+                }
+            });
+        }
+        
+        // init responsive table
+        const rtable = document.querySelectorAll('table.iweb-rtable');
+        if(rtable.length > 0) {
+            rtable.forEach(function(table) {
+                const headerTxts = Array.from(table.querySelectorAll('thead th'), th => th.textContent.trim());
+                if(headerTxts.length > 0) {
+                    table.querySelectorAll('th, td').forEach(cell => {
+                        const wrapper = document.createElement('div');
+                        while (cell.firstChild) {
+                          wrapper.appendChild(cell.firstChild);
+                        }
+                        cell.appendChild(wrapper);
+                    });
+                }
+                else {
+                    table.classList.remove('iweb-rtable');
+                }
+            });
+        }
         
         // Init form
         thisInstance.initForm();
@@ -1436,6 +1462,52 @@ class iwebApp {
                 }
                 else {
                     e.style.height = 'auto';
+                }
+            });
+        }
+    }
+    
+    responsiveTable() {
+        const thisInstance = this;
+        const rtable = document.querySelectorAll('table.iweb-rtable');
+        if(rtable.length > 0) {
+            rtable.forEach(function(table) {
+                const switch_width = (table.dataset.rw ?? 720);
+                const headerTxts = Array.from(table.querySelectorAll('thead th'), th => th.textContent.trim());
+                if(headerTxts.length > 0 && switch_width >= thisInstance.viewerWidth) {
+                    const headerBackground = window.getComputedStyle(table.querySelector('thead tr')).backgroundColor;
+                    const headerBackgrounds = Array.from(table.querySelectorAll('thead th'), th => window.getComputedStyle(th).backgroundColor);
+            
+                    table.classList.add('responsive');
+                    table.querySelectorAll('tbody tr').forEach(function (tr) {
+                        tr.querySelectorAll('td').forEach(function(td, index) {
+                            if(!thisInstance.isValue(td.querySelector('div.vlabel'))) {
+                                const setBackground = thisInstance.isMatch((headerBackgrounds[index] ?? 'rgba(0, 0, 0, 0)'), 'rgba(0, 0, 0, 0)')?headerBackground:(headerBackgrounds[index] ?? 'rgba(0, 0, 0, 0)');
+                                const wrapper = document.createElement('div');
+                                wrapper.classList.add('vlabel');
+                                wrapper.textContent = (headerTxts[index] ?? '');
+                                if(!thisInstance.isMatch(setBackground, 'rgba(0, 0, 0, 0)')) {
+                                    wrapper.style.background = setBackground;
+                                    const rgb = setBackground.match(/\d+/g).map(Number); // [r, g, b, (a)]
+                                    const [r, g, b] = rgb;
+                                    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+                                    if(brightness < 128) {
+                                        wrapper.style.color = '#fff';
+                                    }
+                                }
+                                td.insertBefore(wrapper, td.firstChild);
+                            }
+                        });
+                    });
+                    
+                }
+                else {
+                    table.classList.remove('responsive');
+                    table.querySelectorAll('tbody td').forEach(function(td) {
+                        if(thisInstance.isValue(td.querySelector('div.vlabel'))) {
+                            td.querySelector('div.vlabel').remove();
+                        }
+                    });
                 }
             });
         }

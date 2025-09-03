@@ -137,9 +137,45 @@ table {
     max-width: 100%;
 }
 
-table.list th,
-table.list td {
-    padding: 4px;
+table.iweb-rtable th > div,
+table.iweb-rtable td > div {
+    position: relative;
+}
+
+table.iweb-rtable.responsive tr {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+table.iweb-rtable.responsive th,
+table.iweb-rtable.responsive td {
+   display: flex;
+   gap: 8px;
+   width: 100%!important;
+   padding: 0px!important;
+}
+
+table.iweb-rtable.responsive thead {
+    display: none;
+}
+
+table.iweb-rtable.responsive tbody > tr > td:not(:first-child) {
+    border-top-width: 0px!important;
+}
+
+table.iweb-rtable.responsive tbody > tr > td > div {
+    padding: 8px;
+    text-align: left;
+}
+
+table.iweb-rtable.responsive tbody > tr > td > div.vlabel {
+    width: 120px;
+    font-weight: bold;
+}
+
+table.iweb-rtable.responsive tbody > tr > td > div:nth-child(2) {
+    max-width: calc(100% - 130px);
 }
 
 a {
