@@ -1279,162 +1279,178 @@ class iwebApp {
         
         const elements = document.querySelectorAll('video.iweb-video');
         elements.forEach(async function(e) {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'iweb-video iweb-responsive';
-            wrapper.setAttribute('data-width', (e.getAttribute('width') || e.offsetWidth));
-            wrapper.setAttribute('data-height', (e.getAttribute('height') || e.offsetHeight));
-            
-            if (!thisInstance.isValue(e.querySelector('source').getAttribute('src')) && thisInstance.isValue(e.getAttribute('data-source'))) {
-                try {
-                    const response = await fetch(e.getAttribute('data-source'));
-                    const blob = await response.blob();
-                    const blobUrl = URL.createObjectURL(blob);
-                    e.querySelector('source').src = blobUrl;
-                    e.load();
-                    e.addEventListener('canplay', (v) => {
-                        setTimeout(function() {
-                            const width = (e.getAttribute('width') || e.offsetWidth);
-                            const height = (e.getAttribute('height') || e.offsetHeight);
-                            if(width <= 0 || height <= 0) {
-                                width = 300;
-                                height = 250;
-                            }
-                            v.target.closest('div.iweb-video').setAttribute('data-width', width);
-                            v.target.closest('div.iweb-video').setAttribute('data-height', height);
-                            thisInstance.responsive();
-                        }, 500);
-                    });
-                } catch (err) {
-                    console.log('Failed to load video from ' + e.getAttribute('data-source'), err);
-                }
-            }
-            e.removeAttribute('data-source');
-            e.removeAttribute('class');
-            e.addEventListener('contextmenu', function(v) {
-                v.preventDefault();
-            });
-            e.addEventListener('loadedmetadata', (v) => {
-                v.target.closest('div.iweb-video').querySelector('span.v-duration').textContent = thisInstance.formatTime(0) + ' / ' + thisInstance.formatTime(e.duration);
-            });
-            e.addEventListener('timeupdate', (v) => {
-                if(e.duration > 0) {
-                    v.target.closest('div.iweb-video').querySelector('span.v-duration').textContent = thisInstance.formatTime(e.currentTime) + ' / ' + thisInstance.formatTime(e.duration);
-                    v.target.closest('div.iweb-video').querySelector('input.v-progress-bar').value = (e.currentTime / e.duration) * 100;
-                    if(parseInt(e.currentTime) >= parseInt(e.duration)) {
-                        v.target.closest('div.iweb-video').querySelector('button.v-play-btn').innerHTML = '<svg viewBox="0 0 20 20" fill="#ffffff" stroke="#ffffff"><path d="M2.067,0.043C2.21-0.028,2.372-0.008,2.493,0.085l13.312,8.503c0.094,0.078,0.154,0.191,0.154,0.313 c0,0.12-0.061,0.237-0.154,0.314L2.492,17.717c-0.07,0.057-0.162,0.087-0.25,0.087l-0.176-0.04 c-0.136-0.065-0.222-0.207-0.222-0.361V0.402C1.844,0.25,1.93,0.107,2.067,0.043z"></path></svg>';
+            if (!e.closest('div.iweb-video')) {
+                e.removeAttribute('controls');
+                
+                const included_rdiv = (thisInstance.isValue(e.closest('div.iweb-responsive')));
+                const wrapper = document.createElement('div');
+                wrapper.className = 'iweb-video iweb-responsive';
+                wrapper.setAttribute('data-width', (e.getAttribute('width') || e.offsetWidth));
+                wrapper.setAttribute('data-height', (e.getAttribute('height') || e.offsetHeight));
+
+                if (!thisInstance.isValue(e.querySelector('source').getAttribute('src')) && thisInstance.isValue(e.getAttribute('data-source'))) {
+                    try {
+                        const response = await fetch(e.getAttribute('data-source'));
+                        const blob = await response.blob();
+                        const blobUrl = URL.createObjectURL(blob);
+                        e.querySelector('source').src = blobUrl;
+                        e.load();
+                        e.addEventListener('canplay', (v) => {
+                            setTimeout(function() {
+                                const width = (e.getAttribute('width') || e.offsetWidth);
+                                const height = (e.getAttribute('height') || e.offsetHeight);
+                                if(width <= 0 || height <= 0) {
+                                    width = 300;
+                                    height = 250;
+                                }
+                                v.target.closest('div.iweb-video').setAttribute('data-width', width);
+                                v.target.closest('div.iweb-video').setAttribute('data-height', height);
+                                thisInstance.responsive();
+                            }, 500);
+                        });
+                    } catch (err) {
+                        console.log('Failed to load video from ' + e.getAttribute('data-source'), err);
                     }
                 }
-            });
-            e.parentNode.insertBefore(wrapper, e);
-            wrapper.appendChild(e);
-            
-            const controls = document.createElement('div');
-            controls.className = 'controls';
+                e.removeAttribute('data-source');
+                e.removeAttribute('class');
+                e.addEventListener('contextmenu', function(v) {
+                    v.preventDefault();
+                });
+                e.addEventListener('loadedmetadata', (v) => {
+                    v.target.closest('div.iweb-video').querySelector('span.v-duration').textContent = thisInstance.formatTime(0) + ' / ' + thisInstance.formatTime(e.duration);
+                });
+                e.addEventListener('timeupdate', (v) => {
+                    if(e.duration > 0) {
+                        v.target.closest('div.iweb-video').querySelector('span.v-duration').textContent = thisInstance.formatTime(e.currentTime) + ' / ' + thisInstance.formatTime(e.duration);
+                        v.target.closest('div.iweb-video').querySelector('input.v-progress-bar').value = (e.currentTime / e.duration) * 100;
+                        if(parseInt(e.currentTime) >= parseInt(e.duration)) {
+                            v.target.closest('div.iweb-video').querySelector('button.v-play-btn').innerHTML = '<svg viewBox="0 0 20 20" fill="#ffffff" stroke="#ffffff"><path d="M2.067,0.043C2.21-0.028,2.372-0.008,2.493,0.085l13.312,8.503c0.094,0.078,0.154,0.191,0.154,0.313 c0,0.12-0.061,0.237-0.154,0.314L2.492,17.717c-0.07,0.057-0.162,0.087-0.25,0.087l-0.176-0.04 c-0.136-0.065-0.222-0.207-0.222-0.361V0.402C1.844,0.25,1.93,0.107,2.067,0.043z"></path></svg>';
+                        }
+                    }
+                });
 
-            // Play Button
-            const playDiv = document.createElement('div');
-            const playBtn = document.createElement('button');
-            playBtn.className = 'v-play-btn';
-            playBtn.innerHTML = '<svg viewBox="0 0 20 20" fill="#ffffff" stroke="#ffffff"><path d="M2.067,0.043C2.21-0.028,2.372-0.008,2.493,0.085l13.312,8.503c0.094,0.078,0.154,0.191,0.154,0.313 c0,0.12-0.061,0.237-0.154,0.314L2.492,17.717c-0.07,0.057-0.162,0.087-0.25,0.087l-0.176-0.04 c-0.136-0.065-0.222-0.207-0.222-0.361V0.402C1.844,0.25,1.93,0.107,2.067,0.043z"></path></svg>';
-            playBtn.addEventListener('click', function(e) {
-                const target = e.target;
-                target.closest('div.iweb-video').querySelector('div.volume').classList.remove('show');
-                const video = target.closest('div.iweb-video').querySelector('video');
-                if (video.paused) {
-                    video.play();
-                    target.closest('div.iweb-video').querySelector('button.v-play-btn').innerHTML = '<svg viewBox="0 0 26 24" fill="#ffffff" stroke="#ffffff"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.163 3.819C5 4.139 5 4.559 5 5.4v13.2c0 .84 0 1.26.163 1.581a1.5 1.5 0 0 0 .656.655c.32.164.74.164 1.581.164h.2c.84 0 1.26 0 1.581-.163a1.5 1.5 0 0 0 .656-.656c.163-.32.163-.74.163-1.581V5.4c0-.84 0-1.26-.163-1.581a1.5 1.5 0 0 0-.656-.656C8.861 3 8.441 3 7.6 3h-.2c-.84 0-1.26 0-1.581.163a1.5 1.5 0 0 0-.656.656zm9 0C14 4.139 14 4.559 14 5.4v13.2c0 .84 0 1.26.164 1.581a1.5 1.5 0 0 0 .655.655c.32.164.74.164 1.581.164h.2c.84 0 1.26 0 1.581-.163a1.5 1.5 0 0 0 .655-.656c.164-.32.164-.74.164-1.581V5.4c0-.84 0-1.26-.163-1.581a1.5 1.5 0 0 0-.656-.656C17.861 3 17.441 3 16.6 3h-.2c-.84 0-1.26 0-1.581.163a1.5 1.5 0 0 0-.655.656z" fill="#ffffff"></path></svg>';
+                if (!included_rdiv) {
+                    e.parentNode.insertBefore(wrapper, e);
+                    wrapper.appendChild(e);
                 }
                 else {
-                    video.pause();
-                    target.closest('div.iweb-video').querySelector('button.v-play-btn').innerHTML = '<svg viewBox="0 0 20 20" fill="#ffffff" stroke="#ffffff"><path d="M2.067,0.043C2.21-0.028,2.372-0.008,2.493,0.085l13.312,8.503c0.094,0.078,0.154,0.191,0.154,0.313 c0,0.12-0.061,0.237-0.154,0.314L2.492,17.717c-0.07,0.057-0.162,0.087-0.25,0.087l-0.176-0.04 c-0.136-0.065-0.222-0.207-0.222-0.361V0.402C1.844,0.25,1.93,0.107,2.067,0.043z"></path></svg>';
-                }
-            });
-            playDiv.appendChild(playBtn);
+                    e.closest('div.iweb-responsive').classList.add('iweb-video');
+                } 
 
-            // Duration
-            const durationDiv = document.createElement('div');
-            const durationSpan = document.createElement('span');
-            durationSpan.className = 'v-duration';
-            durationSpan.textContent = '00:00 / 00:00';
-            durationDiv.appendChild(durationSpan);
+                const controls = document.createElement('div');
+                controls.className = 'controls';
 
-            // Volume
-            const soundDiv = document.createElement('div');
-            const soundBtn = document.createElement('button');
-            soundBtn.className = 'v-sound-btn';
-            soundBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#ffffff"><path d="M3 11V13M6 8V16M9 10V14M12 7V17M15 4V20M18 9V15M21 11V13" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
-            soundBtn.addEventListener('click', function(e) {
-                const target = e.target;
-                if (target.closest('div').querySelector('div.volume').classList.contains('show')) {
-                    target.closest('div').querySelector('div.volume').classList.remove('show');
+                // Play Button
+                const playDiv = document.createElement('div');
+                const playBtn = document.createElement('button');
+                playBtn.className = 'v-play-btn';
+                playBtn.innerHTML = '<svg viewBox="0 0 20 20" fill="#ffffff" stroke="#ffffff"><path d="M2.067,0.043C2.21-0.028,2.372-0.008,2.493,0.085l13.312,8.503c0.094,0.078,0.154,0.191,0.154,0.313 c0,0.12-0.061,0.237-0.154,0.314L2.492,17.717c-0.07,0.057-0.162,0.087-0.25,0.087l-0.176-0.04 c-0.136-0.065-0.222-0.207-0.222-0.361V0.402C1.844,0.25,1.93,0.107,2.067,0.043z"></path></svg>';
+                playBtn.addEventListener('click', function(e) {
+                    const target = e.target;
+                    target.closest('div.iweb-video').querySelector('div.volume').classList.remove('show');
+                    const video = target.closest('div.iweb-video').querySelector('video');
+                    if (video.paused) {
+                        video.play();
+                        target.closest('div.iweb-video').querySelector('button.v-play-btn').innerHTML = '<svg viewBox="0 0 26 24" fill="#ffffff" stroke="#ffffff"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.163 3.819C5 4.139 5 4.559 5 5.4v13.2c0 .84 0 1.26.163 1.581a1.5 1.5 0 0 0 .656.655c.32.164.74.164 1.581.164h.2c.84 0 1.26 0 1.581-.163a1.5 1.5 0 0 0 .656-.656c.163-.32.163-.74.163-1.581V5.4c0-.84 0-1.26-.163-1.581a1.5 1.5 0 0 0-.656-.656C8.861 3 8.441 3 7.6 3h-.2c-.84 0-1.26 0-1.581.163a1.5 1.5 0 0 0-.656.656zm9 0C14 4.139 14 4.559 14 5.4v13.2c0 .84 0 1.26.164 1.581a1.5 1.5 0 0 0 .655.655c.32.164.74.164 1.581.164h.2c.84 0 1.26 0 1.581-.163a1.5 1.5 0 0 0 .655-.656c.164-.32.164-.74.164-1.581V5.4c0-.84 0-1.26-.163-1.581a1.5 1.5 0 0 0-.656-.656C17.861 3 17.441 3 16.6 3h-.2c-.84 0-1.26 0-1.581.163a1.5 1.5 0 0 0-.655.656z" fill="#ffffff"></path></svg>';
+                    }
+                    else {
+                        video.pause();
+                        target.closest('div.iweb-video').querySelector('button.v-play-btn').innerHTML = '<svg viewBox="0 0 20 20" fill="#ffffff" stroke="#ffffff"><path d="M2.067,0.043C2.21-0.028,2.372-0.008,2.493,0.085l13.312,8.503c0.094,0.078,0.154,0.191,0.154,0.313 c0,0.12-0.061,0.237-0.154,0.314L2.492,17.717c-0.07,0.057-0.162,0.087-0.25,0.087l-0.176-0.04 c-0.136-0.065-0.222-0.207-0.222-0.361V0.402C1.844,0.25,1.93,0.107,2.067,0.043z"></path></svg>';
+                    }
+                });
+                playDiv.appendChild(playBtn);
+
+                // Duration
+                const durationDiv = document.createElement('div');
+                const durationSpan = document.createElement('span');
+                durationSpan.className = 'v-duration';
+                durationSpan.textContent = '00:00 / 00:00';
+                durationDiv.appendChild(durationSpan);
+
+                // Volume
+                const soundDiv = document.createElement('div');
+                const soundBtn = document.createElement('button');
+                soundBtn.className = 'v-sound-btn';
+                soundBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#ffffff"><path d="M3 11V13M6 8V16M9 10V14M12 7V17M15 4V20M18 9V15M21 11V13" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+                soundBtn.addEventListener('click', function(e) {
+                    const target = e.target;
+                    if (target.closest('div').querySelector('div.volume').classList.contains('show')) {
+                        target.closest('div').querySelector('div.volume').classList.remove('show');
+                    }
+                    else {
+                        target.closest('div').querySelector('div.volume').classList.add('show');
+                    }
+                });
+
+                const volumeDiv = document.createElement('div');
+                volumeDiv.className = 'volume';
+                const volumeRange = document.createElement('input');
+                volumeRange.type = 'range';
+                volumeRange.className = 'v-volume-bar';
+                volumeRange.min = '0';
+                volumeRange.max = '1';
+                volumeRange.step = '0.01';
+                volumeRange.value = '1';
+                volumeRange.addEventListener('input', function(e) {
+                    const target = e.target;
+                    const video = target.closest('div.iweb-video').querySelector('video');
+                    video.volume = e.target.value;
+                });
+                volumeDiv.appendChild(volumeRange);
+                soundDiv.appendChild(soundBtn);
+                soundDiv.appendChild(volumeDiv);
+
+                // Fullscreen
+                const fullscreenDiv = document.createElement('div');
+                const fullscreenBtn = document.createElement('button');
+                fullscreenBtn.className = 'v-fullscreen-btn';
+                fullscreenBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#ffffff"><path d="M21 9V8C21 5.79086 18.9853 4 16.5 4H15.25M21 15V16C21 18.2091 18.9853 20 16.5 20H15.25M3 15V16C3 18.2091 5.01472 20 7.5 20H8.75M3 9V8C3 5.79086 5.01472 4 7.5 4H8.75" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+                fullscreenBtn.addEventListener('click', function(e) {
+                    const target = e.target;
+                    if (target.closest('div.iweb-video').classList.contains('fullscreen')) {
+                        target.closest('div.iweb-video').classList.remove('fullscreen');
+                        document.body.classList.remove('iweb-disable-scroll');
+                    }
+                    else {
+                        target.closest('div.iweb-video').classList.add('fullscreen');
+                        document.body.classList.add('iweb-disable-scroll');
+                    }
+                    target.closest('div.iweb-video').querySelector('div.volume').classList.remove('show');
+                });
+                fullscreenDiv.appendChild(fullscreenBtn);
+
+                // Progress bar
+                const progressDiv = document.createElement('div');
+                const progressRange = document.createElement('input');
+                progressRange.type = 'range';
+                progressRange.className = 'v-progress-bar';
+                progressRange.min = '0';
+                progressRange.max = '100';
+                progressRange.value = '0';
+                progressRange.addEventListener('input', function(e) {
+                    const target = e.target;
+                    const video = target.closest('div.iweb-video').querySelector('video');
+                    video.currentTime = parseFloat((e.target.value / 100) * video.duration);
+                    target.closest('div.iweb-video').querySelector('div.volume').classList.remove('show');
+                });
+
+                progressDiv.appendChild(progressRange);
+
+                // Append all
+                controls.appendChild(playDiv);
+                controls.appendChild(durationDiv);
+                controls.appendChild(soundDiv);
+                controls.appendChild(fullscreenDiv);
+                controls.appendChild(progressDiv);
+
+                if (!included_rdiv) {
+                    wrapper.appendChild(controls);
                 }
                 else {
-                    target.closest('div').querySelector('div.volume').classList.add('show');
+                    e.closest('div.iweb-responsive').appendChild(controls);
                 }
-            });
-            
-            const volumeDiv = document.createElement('div');
-            volumeDiv.className = 'volume';
-            const volumeRange = document.createElement('input');
-            volumeRange.type = 'range';
-            volumeRange.className = 'v-volume-bar';
-            volumeRange.min = '0';
-            volumeRange.max = '1';
-            volumeRange.step = '0.01';
-            volumeRange.value = '1';
-            volumeRange.addEventListener('input', function(e) {
-                const target = e.target;
-                const video = target.closest('div.iweb-video').querySelector('video');
-                video.volume = e.target.value;
-            });
-            volumeDiv.appendChild(volumeRange);
-            soundDiv.appendChild(soundBtn);
-            soundDiv.appendChild(volumeDiv);
-
-            // Fullscreen
-            const fullscreenDiv = document.createElement('div');
-            const fullscreenBtn = document.createElement('button');
-            fullscreenBtn.className = 'v-fullscreen-btn';
-            fullscreenBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#ffffff"><path d="M21 9V8C21 5.79086 18.9853 4 16.5 4H15.25M21 15V16C21 18.2091 18.9853 20 16.5 20H15.25M3 15V16C3 18.2091 5.01472 20 7.5 20H8.75M3 9V8C3 5.79086 5.01472 4 7.5 4H8.75" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
-            fullscreenBtn.addEventListener('click', function(e) {
-                const target = e.target;
-                if (target.closest('div.iweb-video').classList.contains('fullscreen')) {
-                    target.closest('div.iweb-video').classList.remove('fullscreen');
-                    document.body.classList.remove('iweb-disable-scroll');
-                }
-                else {
-                    target.closest('div.iweb-video').classList.add('fullscreen');
-                    document.body.classList.add('iweb-disable-scroll');
-                }
-                target.closest('div.iweb-video').querySelector('div.volume').classList.remove('show');
-            });
-            fullscreenDiv.appendChild(fullscreenBtn);
-
-            // Progress bar
-            const progressDiv = document.createElement('div');
-            const progressRange = document.createElement('input');
-            progressRange.type = 'range';
-            progressRange.className = 'v-progress-bar';
-            progressRange.min = '0';
-            progressRange.max = '100';
-            progressRange.value = '0';
-            progressRange.addEventListener('input', function(e) {
-                const target = e.target;
-                const video = target.closest('div.iweb-video').querySelector('video');
-                video.currentTime = parseFloat((e.target.value / 100) * video.duration);
-                target.closest('div.iweb-video').querySelector('div.volume').classList.remove('show');
-            });
-            
-            progressDiv.appendChild(progressRange);
-
-            // Append all
-            controls.appendChild(playDiv);
-            controls.appendChild(durationDiv);
-            controls.appendChild(soundDiv);
-            controls.appendChild(fullscreenDiv);
-            controls.appendChild(progressDiv);
-            
-            wrapper.appendChild(controls);
+            }
         });
         
         if ((typeof callBack) === 'function') {
