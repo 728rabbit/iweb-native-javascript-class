@@ -7,6 +7,7 @@
         <link href="base/iweb.native.css" rel="stylesheet" type="text/css"/>
         <script src="base/iweb.native.js"></script>
         <script src="3rd/floatingSocialShare.js"></script>
+        <script src="3rd/timerCountDown.js" type="text/javascript"></script>
         <style>
         div.iweb-countdown {
             position: relative;
@@ -48,50 +49,11 @@
         <script>const iweb = (new iwebApp()).init();(new floatingSocialShare());</script>
         <script>
         function iwebFunc() { 
-            const countdowns = document.querySelectorAll('div.iweb-countdown');
-            countdowns.forEach(function(el) {
-                const maxValue = parseInt(el.getAttribute('data-value'));
-                const direction = el.getAttribute('data-direction') ?? 'down';
-                let distance = (direction === 'down' ? maxValue : 0);
-
-                function updateCountdown() {
-                    if (direction === 'down') {
-                        if (distance > 0) { distance-- } ;
-                    } else {
-                        if (distance < maxValue) { distance++ };
-                    }
-
-                    let days = Math.floor(distance / (60 * 60 * 24));
-                    let hours = Math.floor((distance % (60 * 60 * 24)) / (60 * 60));
-                    let minutes = Math.floor((distance % (60 * 60)) / 60);
-                    let seconds = Math.floor(distance % 60);
-
-                    days = days < 10 ? '0' + days : days;
-                    hours = hours < 10 ? '0' + hours : hours;
-                    minutes = minutes < 10 ? '0' + minutes : minutes;
-                    seconds = seconds < 10 ? '0' + seconds : seconds;
-
-                    const daySpan = el.querySelector('.day > span');
-                    const hourSpan = el.querySelector('.hour > span');
-                    const minuteSpan = el.querySelector('.minute > span');
-                    const secondSpan = el.querySelector('.second > span');
-
-                    if (daySpan) daySpan.textContent = days;
-                    if (hourSpan) hourSpan.textContent = hours;
-                    if (minuteSpan) minuteSpan.textContent = minutes;
-                    if (secondSpan) secondSpan.textContent = seconds;
-                }
-
-                //updateCountdown();
-                const timer = setInterval(() => {
-                    const prev = distance;
-                    updateCountdown();
-                    if ((direction === 'down' && distance <= 0) || (direction === 'up' && distance >= maxValue)) {
-                        clearInterval(timer);
-                        console.log('End');
-                    }
-                }, 1000);
+            const cm = new timerCountDown(function(item) {
+                console.log("完成:", item.el, "方向:", item.direction, "最大值:", item.maxValue);
+                item.el.style.border = "2px solid red";
             });
+            cm.init();
         }
         </script>
     </body>
