@@ -56,43 +56,39 @@
         </div>
         <script>const iweb = (new iwebApp()).init();(new floatingSocialShare());</script>
         <script>
-            function formatNumber(num) {
-                return num.toLocaleString();
-            }
-
-            function animateCounter(counter) {
-                const target = +counter.dataset.target;
-                let current = 0;
-                const increment = Math.ceil(target / 100);
-                const update = () => {
-                    current += increment;
-                    if (current < target) {
-                        counter.textContent = formatNumber(current) + "+";
-                        requestAnimationFrame(update);
-                    } else {
-                        counter.textContent = formatNumber(target) + "+";
+        function iwebFunc() { 
+            const section = document.querySelector('#upcounter-area');
+            const counters = section.querySelectorAll('div.counter');
+            let hasAnimated = false;
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !hasAnimated) {
+                        counters.forEach(counter => animateCounter(counter));
+                        hasAnimated = true;
+                        observer.unobserve(section);
                     }
-                };
-                update();
-            }
-            
-            document.addEventListener('DOMContentLoaded', () => {
-                const section = document.querySelector('#upcounter-area');
-                const counters = section.querySelectorAll('div.counter');
-                let hasAnimated = false;
-                const observer = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting && !hasAnimated) {
-                            counters.forEach(counter => animateCounter(counter));
-                            hasAnimated = true;
-                            observer.unobserve(section);
-                        }
-                    });
-                }, {
-                    threshold: 0.5
                 });
-                observer.observe(section);
+            }, {
+                threshold: 0.5
             });
+            observer.observe(section);
+        };
+        
+        function animateCounter(counter) {
+            const target = +counter.dataset.target;
+            let current = 0;
+            const increment = Math.ceil(target / 100);
+            const update = () => {
+                current += increment;
+                if (current < target) {
+                    counter.textContent = (current.toLocaleString()) + "+";
+                    requestAnimationFrame(update);
+                } else {
+                    counter.textContent = (target.toLocaleString()) + "+";
+                }
+            };
+            update();
+        }
         </script>
     </body>
 </html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>倒計時 Countdown</title>
+        <link href="base/icons/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="base/iweb.native.css" rel="stylesheet" type="text/css"/>
+        <script src="base/iweb.native.js"></script>
+        <script src="3rd/floatingSocialShare.js"></script>
+        <style>
+        div.iweb-countdown {
+            position: relative;
+        }
+
+        div.iweb-countdown * {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        </style>
+    </head>
+    <body>
+        <div style="padding:40px;">
+            <div class="widget">
+                <div class="iweb-countdown" data-value="20" data-direction="up">
+                    <ul class="iweb-flex hcenter" data-gap="20">
+                        <li><div class="day"><span>00</span>&nbsp;天</div></li>
+                        <li><div class="hour"><span>00</span>&nbsp;時</div></li>
+                        <li><div class="minute"><span>00</span>&nbsp;分</div></li>
+                        <li><div class="second"><span>00</span>&nbsp;秒</div></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <p>&nbsp;</p>
+            
+            <div class="widget">
+                <div class="iweb-countdown" data-value="60">
+                    <ul class="iweb-flex hcenter" data-gap="20">
+                        <li><div class="day"><span>00</span>&nbsp;天</div></li>
+                        <li><div class="hour"><span>00</span>&nbsp;時</div></li>
+                        <li><div class="minute"><span>00</span>&nbsp;分</div></li>
+                        <li><div class="second"><span>00</span>&nbsp;秒</div></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script>const iweb = (new iwebApp()).init();(new floatingSocialShare());</script>
+        <script>
+        function iwebFunc() { 
+            const countdowns = document.querySelectorAll('div.iweb-countdown');
+            countdowns.forEach(function(el) {
+                const maxValue = parseInt(el.getAttribute('data-value'));
+                const direction = el.getAttribute('data-direction') ?? 'down';
+                let distance = (direction === 'down' ? maxValue : 0);
+
+                function updateCountdown() {
+                    if (direction === 'down') {
+                        if (distance > 0) { distance-- } ;
+                    } else {
+                        if (distance < maxValue) { distance++ };
+                    }
+
+                    let days = Math.floor(distance / (60 * 60 * 24));
+                    let hours = Math.floor((distance % (60 * 60 * 24)) / (60 * 60));
+                    let minutes = Math.floor((distance % (60 * 60)) / 60);
+                    let seconds = Math.floor(distance % 60);
+
+                    days = days < 10 ? '0' + days : days;
+                    hours = hours < 10 ? '0' + hours : hours;
+                    minutes = minutes < 10 ? '0' + minutes : minutes;
+                    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                    const daySpan = el.querySelector('.day > span');
+                    const hourSpan = el.querySelector('.hour > span');
+                    const minuteSpan = el.querySelector('.minute > span');
+                    const secondSpan = el.querySelector('.second > span');
+
+                    if (daySpan) daySpan.textContent = days;
+                    if (hourSpan) hourSpan.textContent = hours;
+                    if (minuteSpan) minuteSpan.textContent = minutes;
+                    if (secondSpan) secondSpan.textContent = seconds;
+                }
+
+                //updateCountdown();
+                const timer = setInterval(() => {
+                    const prev = distance;
+                    updateCountdown();
+                    if ((direction === 'down' && distance <= 0) || (direction === 'up' && distance >= maxValue)) {
+                        clearInterval(timer);
+                        console.log('End');
+                    }
+                }, 1000);
+            });
+        }
+        </script>
+    </body>
+</html>
