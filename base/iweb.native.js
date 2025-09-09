@@ -337,7 +337,7 @@ class iwebApp {
                                 }
                             });
 
-                            const selectedValue = target.getAttribute('data-value').toString();
+                            const selectedValue = (target.getAttribute('data-value') || '').toString();
                             if (!selectedOptions.includes(selectedValue)) {
                                 selectedOptions.push(selectedValue);
                             } 
@@ -365,7 +365,7 @@ class iwebApp {
                         // Handle single selection
                         else {
                             target.closest('div.iweb-select').classList.remove('show');
-                            selectElement.value = target.getAttribute('data-value');
+                            selectElement.value = (target.getAttribute('data-value') || '');
                             selectElement.dispatchEvent(new Event('change', {
                                 bubbles: true
                             }));
@@ -471,8 +471,8 @@ class iwebApp {
                                         // Set id input & search input
                                         const fillID = target.closest('div.iweb-input-autocomplete').querySelector('input.fill-id');
                                         const fillText = target.closest('div.iweb-input-autocomplete').querySelector('input.fill-text');
-                                        fillID.value = target.getAttribute('data-id');
-                                        fillText.value = target.getAttribute('data-value');
+                                        fillID.value = (target.getAttribute('data-id') || '');
+                                        fillText.value = (target.getAttribute('data-value') || '');
                                         fillText.readOnly = true;
 
                                         // Create reset button
@@ -1489,7 +1489,7 @@ class iwebApp {
         const rtable = document.querySelectorAll('table.iweb-rtable');
         if(rtable.length > 0) {
             rtable.forEach(function(table) {
-                const switch_width = (table.dataset.rw ?? 720);
+                const switch_width = (table.dataset.rw || 720);
                 const headerTxts = Array.from(table.querySelectorAll('thead th'), th => th.textContent.trim());
                 if(headerTxts.length > 0 && switch_width >= thisInstance.viewerWidth) {
                     const headerBackground = window.getComputedStyle(table.querySelector('thead tr')).backgroundColor;
@@ -1499,10 +1499,10 @@ class iwebApp {
                     table.querySelectorAll('tbody tr').forEach(function (tr) {
                         tr.querySelectorAll('td').forEach(function(td, index) {
                             if(!thisInstance.isValue(td.querySelector('div.vlabel'))) {
-                                const setBackground = thisInstance.isMatch((headerBackgrounds[index] ?? 'rgba(0, 0, 0, 0)'), 'rgba(0, 0, 0, 0)')?headerBackground:(headerBackgrounds[index] ?? 'rgba(0, 0, 0, 0)');
+                                const setBackground = thisInstance.isMatch((headerBackgrounds[index] || 'rgba(0, 0, 0, 0)'), 'rgba(0, 0, 0, 0)')?headerBackground:(headerBackgrounds[index] || 'rgba(0, 0, 0, 0)');
                                 const wrapper = document.createElement('div');
                                 wrapper.classList.add('vlabel');
-                                wrapper.textContent = (headerTxts[index] ?? '');
+                                wrapper.textContent = (headerTxts[index] || '');
                                 if(!thisInstance.isMatch(setBackground, 'rgba(0, 0, 0, 0)')) {
                                     wrapper.style.background = setBackground;
                                     const rgb = setBackground.match(/\d+/g).map(Number); // [r, g, b, (a)]
