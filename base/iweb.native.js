@@ -3524,6 +3524,60 @@ class iwebApp {
         return password.split('').sort(() => Math.random() - 0.5).join('');
     }
     
+    filterMaliciousCode(ignore_script_iframe = false) {
+        const thisInstance = this;
+        
+        let dangerousPatterns = [
+            /<script\b[^>]*>[\s\S]*?<\/script>/gi,
+            /<iframe\b[^>]*>[\s\S]*?<\/iframe>/gi,
+            /<(input|textarea|select|form)\b[^>]*>[\s\S]*?<\/?(input|textarea|select|form)\b[^>]*>/gi,
+            /\b((javascript|vbscript|wscript|jscript|vbs)\s*:\s*["\']?\s*\w+\s*\([^)]*\)\s*[,;]?["\']?)/gi,
+            /\b((document|(document\.)?window)\.(location|on\w*))/gi,
+            /\b(expression\s*\([^)]*\)\s*[,;]?)/gi,
+            /\b(Redirect\s+30\d)/gi,
+            /\b(on\w+\s*=\s*["\']?\s*\w+\s*\(.*\)\s*[,;]?["\']?)/gi
+        ];
+        if(thisInstance.isMatch(ignore_script_iframe, true)) {
+            dangerousPatterns = [
+                /<(input|textarea|select|form)\b[^>]*>[\s\S]*?<\/?(input|textarea|select|form)\b[^>]*>/gi,
+                /\b((javascript|vbscript|wscript|jscript|vbs)\s*:\s*["\']?\s*\w+\s*\([^)]*\)\s*[,;]?["\']?)/gi,
+                /\b((document|(document\.)?window)\.(location|on\w*))/gi,
+                /\b(expression\s*\([^)]*\)\s*[,;]?)/gi,
+                /\b(Redirect\s+30\d)/gi,
+                /\b(on\w+\s*=\s*["\']?\s*\w+\s*\(.*\)\s*[,;]?["\']?)/gi
+            ];
+        }
+
+        // filter function
+        function filterInputValue(value) {
+            let filtered = value;
+            dangerousPatterns.forEach(pattern => {
+                if (pattern.test(filtered)) {
+                    filtered = filtered.replace(pattern, '');
+                }
+            });
+            return filtered;
+        }
+
+        // use event delegation to listen to all input events
+        document.addEventListener('input', function(event) {
+            const target = event.target;
+
+            // only handle input and textarea
+            if (target.matches && (target.matches('input') || target.matches('textarea'))) {
+                const original = target.value;
+                const filtered = filterInputValue(original);
+
+                if (filtered !== original) {
+                    target.value = filtered;
+
+                    // trigger input Event to ensure other listeners receive the update
+                    target.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+            }
+        });
+    }
+    
     copyright() {
         const startYear = 2023;
         const currentYear = new Date().getFullYear();
