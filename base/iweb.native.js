@@ -1571,7 +1571,7 @@ class iwebApp {
             showBusy: true,
             multiThread: false
         }, requestData);
-        
+ 
         if (requestData.multiThread) {
             thisInstance.isBusy = false;
         }
@@ -1649,7 +1649,7 @@ class iwebApp {
             // Try to send data with progress tracking using XMLHttpRequest
             try {
                 thisInstance.isBusy = true;
-                thisInstance.showBusy(true, ((requestData.showBusy) ? 50 : 0));
+                thisInstance.showBusy(true, ((thisInstance.isMatch(requestData.showBusy, 1) || thisInstance.isMatch(requestData.showBusy, true)) ? 50 : 0));
 
                 // Use XMLHttpRequest for progress tracking
                 const xhr = new XMLHttpRequest();
@@ -4131,17 +4131,13 @@ class iTimePicker {
         this.hidePicker();
 
         this.activeInput = input; // Track the input currently being edited
-        const startTime = (parseInt(input.getAttribute('data-start')) || 800); // Use data-start or default to 800
-        const endTime = (parseInt(input.getAttribute('data-end')) || 2200); // Use data-end or default to 2200
-        const interval = parseInt(input.getAttribute('data-interval')) || 5; // Use data-interval or default to 10
+        const startTime = (parseInt(input.getAttribute('data-start') || 600)); // Use data-start or default to 600
+        const endTime = (parseInt(input.getAttribute('data-end') || 2200)); // Use data-end or default to 2200
+        const interval = parseInt(input.getAttribute('data-interval') || 5); // Use data-interval or default to 5
         const picker = this.createPicker(startTime, endTime, interval);
         document.body.appendChild(picker);
 
-        const {
-            top,
-            left,
-            height
-        } = input.getBoundingClientRect();
+        const { top, left, height } = input.getBoundingClientRect();
         picker.style.position = 'absolute';
         picker.style.top = (top + window.scrollY + height) + 'px';
         picker.style.left = (left + window.scrollX) + 'px';
