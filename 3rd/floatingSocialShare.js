@@ -53,6 +53,7 @@ class floatingSocialShare {
         this.socialButtonsDiv = document.createElement('div');
 
         // Apply styles to the main button container (positioned at the bottom-right)
+        floatingButtonDiv.className = 'floating-social';
         this.applyStyles(floatingButtonDiv, {
             position: 'fixed',
             top: '50%',
