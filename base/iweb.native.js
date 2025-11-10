@@ -801,6 +801,7 @@ class iwebApp {
             const defaultInput = [
                 'input[type="text"]',
                 'input[type="password"]',
+                'input[type="datetime-local"]',
                 'input[type="date"]',
                 'input[type="time"]',
                 'input[type="color"]',
