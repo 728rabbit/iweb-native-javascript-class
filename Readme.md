@@ -1,5 +1,5 @@
 ## iweb native javascript class:
-Helps you easily build web applications, with the most commonly used features already included. e.g. select, checkbox, radio, pagaration, popup dialog, ajax post, ajax form and so on
+Helps you easily build web applications with the most commonly used features already included. e.g. select, checkbox, radio, pagaration, popup dialog, ajax post, ajax form and so on
 
 In addition, efforts are being made to develop other tools (e.g. Simple Resource Calendar etc)
 
@@ -12,5 +12,6 @@ Terms of Use:
 3. For commercial use or substantial changes, please contact the author for permission.
 
 All rights reserved.
+
 
 
