@@ -3585,9 +3585,10 @@ class iwebApp {
         const yearText = (startYear === currentYear) ? `${currentYear}` : `${startYear}–${currentYear}`;
         const author = 'KaiyunChan';
         const text = [
-            'iweb native javaScript class, helps you easily build web applications, with the most commonly used features already included.',
-            'Copyright (c) ' + yearText+ ' ' + author,
-            'https://github.com/728rabbit/iweb-native-javascript-class'
+            'iweb native javaScript class - easily build web applications with the most commonly used features already included.',
+            'Copyright: ' + yearText+ ' ' + author,
+            'License: Personal/educational use only. Modifications and commercial use require permission.',
+            'Learn more: https://github.com/728rabbit/iweb-native-javascript-class'
         ];
         console.log(`%c${text.join('\n')}`, 'color: #525896; font-weight: bold;');
     }
