@@ -101,7 +101,7 @@
     overflow: hidden !important;
 }
 
-html {
+html { 
     font-size: 1em;
 }
 
@@ -115,7 +115,6 @@ html.large-font {
 
 body {
     font-family: 'NotoSansTC', 'NotoSansSC', 'Microsoft JhengHei', '微軟正黑體', 'PingFang TC', 'Heiti TC', 'Arial', sans-serif;
-    font-weight: 400;
     font-size: 1rem;
     color: var(--icolor-black);
     min-width: 360px;
@@ -150,6 +149,8 @@ table.iweb-rtable.responsive tr {
 
 table.iweb-rtable.responsive th,
 table.iweb-rtable.responsive td {
+   display: -webkit-box;
+   display: -ms-flexbox;
    display: flex;
    gap: 8px;
    width: 100%!important;
@@ -222,8 +223,14 @@ video {
     vertical-align: middle;
 }
 
+input[type="file"] {
+    font-family: 'NotoSansTC', 'NotoSansSC', 'Microsoft JhengHei', '微軟正黑體', 'PingFang TC', 'Heiti TC', 'Arial', sans-serif;
+    font-size: 0.9375rem;
+}
+
 input[type="text"],
 input[type="password"],
+input[type="datetime-local"],
 input[type="date"],
 input[type="time"],
 input[type="color"],
@@ -234,7 +241,8 @@ input[type="number"]{
     -moz-appearance: none;
     appearance: none;
     background-color: var(--icolor-white);
-    font-size: 1rem;
+    font-family: 'NotoSansTC', 'NotoSansSC', 'Microsoft JhengHei', '微軟正黑體', 'PingFang TC', 'Heiti TC', 'Arial', sans-serif;
+    font-size: 0.9375rem;
     color: var(--icolor-black);
     max-width: 100%;
     height: 36px;
@@ -275,7 +283,8 @@ textarea {
     -moz-appearance: none;
     appearance: none;
     background-color: var(--icolor-white);
-    font-size: 1rem;
+    font-family: 'NotoSansTC', 'NotoSansSC', 'Microsoft JhengHei', '微軟正黑體', 'PingFang TC', 'Heiti TC', 'Arial', sans-serif;
+    font-size: 0.9375rem;
     color: var(--icolor-black);
     max-width: 100%;
     min-height: 180px;
@@ -369,7 +378,8 @@ input[type="range"]::-ms-thumb {
 
 select {
     background-color: var(--icolor-white);
-    font-size: 1rem;
+    font-family: 'NotoSansTC', 'NotoSansSC', 'Microsoft JhengHei', '微軟正黑體', 'PingFang TC', 'Heiti TC', 'Arial', sans-serif;
+    font-size: 0.9375rem;
     color: var(--icolor-black);
 }
 
@@ -381,6 +391,7 @@ button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    font-family: 'NotoSansTC', 'NotoSansSC', 'Microsoft JhengHei', '微軟正黑體', 'PingFang TC', 'Heiti TC', 'Arial', sans-serif;
     font-size: 1rem;
     max-width: 100%;
     padding: 6px 12px;
@@ -392,6 +403,7 @@ button {
 button.btn,
 a.btn {
     display: inline-block;
+    font-family: 'NotoSansTC', 'NotoSansSC', 'Microsoft JhengHei', '微軟正黑體', 'PingFang TC', 'Heiti TC', 'Arial', sans-serif;
     font-size: 1rem;
     min-height: 36px;
     padding: 6px 12px;
